@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cooperação que Transforma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde: #1a4a2e;
+    --verde-medio: #2d6e47;
+    --verde-claro: #4a9e68;
+    --ambar: #c17f24;
+    --ambar-claro: #e8a84a;
+    --bege: #f5efe4;
+    --bege-escuro: #e8dcc8;
+    --terra: #8b5e3c;
+    --branco: #fdfaf6;
+    --texto: #1c1c1a;
+    --texto-suave: #5a5a52;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--branco);
+    color: var(--texto);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 2.5rem;
+    background: rgba(253,250,246,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(26,74,46,0.1);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--verde);
+    letter-spacing: -0.02em;
+  }
+
+  .nav-logo span { color: var(--ambar); }
+
+  .lang-toggle {
+    display: flex; gap: 4px;
+    background: var(--bege-escuro);
+    border-radius: 100px;
+    padding: 4px;
+  }
+
+  .lang-btn {
+    padding: 6px 16px;
+    border: none; cursor: pointer;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem; font-weight: 500;
+    transition: all 0.3s;
+    background: transparent;
+    color: var(--texto-suave);
+  }
+
+  .lang-btn.active {
+    background: var(--verde);
+    color: white;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    background: var(--bege);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-pattern {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 80%, rgba(26,74,46,0.06) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(193,127,36,0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    background: var(--verde-claro);
+    color: white;
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 6px 18px; border-radius: 100px;
+    margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  h1.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--verde);
+    max-width: 800px;
+    margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  h1.hero-title em {
+    font-style: italic;
+    color: var(--ambar);
+  }
+
+  .hero-sub {
+    font-size: 1.1rem; font-weight: 300; color: var(--texto-suave);
+    max-width: 520px; line-height: 1.7;
+    margin-bottom: 2.5rem;
+    opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .btn-primary {
+    background: var(--verde);
+    color: white; border: none; cursor: pointer;
+    padding: 14px 32px; border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+
+  .btn-primary:hover { background: var(--verde-medio); transform: translateY(-2px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--verde); border: 1.5px solid var(--verde);
+    cursor: pointer;
+    padding: 14px 32px; border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .btn-secondary:hover { background: var(--bege-escuro); }
+
+  /* CIDADE ILUSTRAÇÃO */
+  .city-illustration {
+    margin-top: 3rem;
+    opacity: 0; animation: fadeUp 0.8s 1s forwards;
+  }
+
+  /* SEÇÃO PROBLEMA */
+  .section {
+    padding: 6rem 2rem;
+  }
+
+  .section-inner {
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ambar);
+    margin-bottom: 1rem;
+  }
+
+  h2.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--verde);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  h2.section-title em { font-style: italic; color: var(--ambar); }
+
+  .section-body {
+    font-size: 1rem; color: var(--texto-suave); line-height: 1.8;
+    max-width: 600px; margin-bottom: 2.5rem;
+  }
+
+  /* FLUXO BANCO */
+  .fluxo-container {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2rem; margin-top: 3rem;
+  }
+
+  @media (max-width: 700px) {
+    .fluxo-container { grid-template-columns: 1fr; }
+  }
+
+  .fluxo-card {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.07);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fluxo-card.banco { border-top: 4px solid #c0392b; }
+  .fluxo-card.coop { border-top: 4px solid var(--verde-claro); }
+
+  .fluxo-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .fluxo-card.banco .fluxo-card-title { color: #c0392b; }
+  .fluxo-card.coop .fluxo-card-title { color: var(--verde); }
+
+  .fluxo-card-sub {
+    font-size: 0.82rem; color: var(--texto-suave);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ANIMAÇÃO SVG FLUXO */
+  .fluxo-svg-wrap { width: 100%; }
+
+  .dinheiro-dot {
+    animation: fluxoBanco 3s ease-in-out infinite;
+  }
+
+  .dinheiro-dot-coop {
+    animation: fluxoCoop 3s ease-in-out infinite;
+  }
+
+  @keyframes fluxoBanco {
+    0%   { offset-distance: 0%; opacity: 1; }
+    70%  { opacity: 1; }
+    85%  { opacity: 0; }
+    100% { offset-distance: 100%; opacity: 0; }
+  }
+
+  @keyframes fluxoCoop {
+    0%   { offset-distance: 0%; }
+    100% { offset-distance: 100%; }
+  }
+
+  /* SEÇÃO IMPACTO */
+  .impacto-bg {
+    background: var(--verde);
+    color: white;
+  }
+
+  .impacto-bg .section-label { color: var(--ambar-claro); }
+  .impacto-bg h2.section-title { color: white; }
+  .impacto-bg .section-body { color: rgba(255,255,255,0.7); }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .stat-card {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: transform 0.3s;
+  }
+
+  .stat-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.12); }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem; font-weight: 900;
+    color: var(--ambar-claro);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.88rem; font-weight: 400;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.5;
+  }
+
+  .stat-source {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.5rem;
+  }
+
+  /* SEÇÃO COMO FUNCIONA */
+  .como-funciona-bg { background: var(--bege); }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .step-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    border: 1px solid var(--bege-escuro);
+    position: relative;
+  }
+
+  .step-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 900;
+    color: var(--bege-escuro);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .step-icon-wrap {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--verde);
+    margin-bottom: 0.5rem;
+  }
+
+  .step-body {
+    font-size: 0.88rem; color: var(--texto-suave); line-height: 1.7;
+  }
+
+  /* CTA FINAL */
+  .cta-final {
+    background: var(--ambar);
+    text-align: center;
+    padding: 6rem 2rem;
+  }
+
+  .cta-final h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: white; font-weight: 900;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .cta-final p {
+    color: rgba(255,255,255,0.85);
+    font-size: 1.05rem; max-width: 500px; margin: 0 auto 2rem;
+    line-height: 1.7;
+  }
+
+  .btn-white {
+    background: white; color: var(--ambar);
+    border: none; cursor: pointer;
+    padding: 14px 36px; border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+  }
+
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+
+  /* FOOTER */
+  footer {
+    background: var(--texto);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.82rem;
+    line-height: 1.8;
+  }
+
+  footer a { color: var(--ambar-claro); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1; transform: translateY(0);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(20px); }
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 60px; height: 3px;
+    background: var(--ambar);
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  /* QUOTE */
+  .quote-block {
+    border-left: 3px solid var(--ambar);
+    padding: 1rem 1.5rem;
+    margin: 2rem 0;
+    background: rgba(193,127,36,0.06);
+    border-radius: 0 8px 8px 0;
+  }
+
+  .quote-block p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--verde);
+    line-height: 1.7;
+  }
+
+  .quote-block cite {
+    font-size: 0.8rem;
+    color: var(--texto-suave);
+    font-style: normal;
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  /* PILL BADGE */
+  .pill {
+    display: inline-block;
+    padding: 3px 10px; border-radius: 100px;
+    font-size: 0.72rem; font-weight: 500;
+  }
+
+  .pill-verde { background: rgba(74,158,104,0.15); color: var(--verde-medio); }
+  .pill-vermelho { background: rgba(192,57,43,0.1); color: #c0392b; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Cooperação<span> •</span> que Transforma</div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('pt')">PT</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-pattern"></div>
+
+  <div class="hero-tag" data-pt="Educação financeira colaborativa" data-en="Collaborative financial education">
+    Educação financeira colaborativa
+  </div>
+
+  <h1 class="hero-title">
+    <span data-pt="O dinheiro que <em>fica</em> na sua cidade" data-en="The money that <em>stays</em> in your city">
+      O dinheiro que <em>fica</em> na sua cidade
+    </span>
+  </h1>
+
+  <p class="hero-sub" data-pt="Entenda como as cooperativas de crédito transformam comunidades — mantendo riqueza local, criando oportunidades e fortalecendo quem vive e trabalha aqui." data-en="Understand how credit cooperatives transform communities — keeping wealth local, creating opportunities and strengthening those who live and work here.">
+    Entenda como as cooperativas de crédito transformam comunidades — mantendo riqueza local, criando oportunidades e fortalecendo quem vive e trabalha aqui.
+  </p>
+
+  <div class="hero-cta">
+    <a href="#problema" class="btn-primary" data-pt="Ver como funciona →" data-en="See how it works →">Ver como funciona →</a>
+    <a href="#impacto" class="btn-secondary" data-pt="Ver dados reais" data-en="See real data">Ver dados reais</a>
+  </div>
+
+  <!-- Cidade SVG -->
+  <div class="city-illustration">
+    <svg viewBox="0 0 640 200" width="640" height="200" xmlns="http://www.w3.org/2000/svg" style="max-width:100%">
+      <!-- Céu / chão -->
+      <rect x="0" y="140" width="640" height="60" fill="#d4e8c2" rx="4"/>
+
+      <!-- Prédios fundo -->
+      <rect x="30" y="80" width="40" height="60" fill="#b8d4a8" rx="2"/>
+      <rect x="80" y="90" width="30" height="50" fill="#a8c898" rx="2"/>
+
+      <!-- Igreja/cooperativa -->
+      <rect x="260" y="60" width="60" height="80" fill="#2d6e47" rx="2"/>
+      <polygon points="290,30 320,60 260,60" fill="#1a4a2e"/>
+      <rect x="278" y="80" width="12" height="15" fill="#fdfaf6" rx="1"/>
+      <rect x="296" y="80" width="12" height="15" fill="#fdfaf6" rx="1"/>
+      <rect x="278" y="100" width="30" height="40" fill="#1a4a2e" rx="1"/>
+      <!-- Cruz -->
+      <rect x="287" y="38" width="6" height="18" fill="#e8a84a"/>
+      <rect x="282" y="43" width="16" height="5" fill="#e8a84a"/>
+
+      <!-- Casas -->
+      <rect x="120" y="100" width="50" height="40" fill="#e8dcc8" rx="2"/>
+      <polygon points="120,100 170,100 145,75" fill="#c17f24"/>
+      <rect x="132" y="110" width="14" height="14" fill="#fdfaf6" rx="1"/>
+      <rect x="152" y="110" width="14" height="14" fill="#fdfaf6" rx="1"/>
+      <rect x="136" y="124" width="18" height="16" fill="#8b5e3c" rx="1"/>
+
+      <rect x="180" y="105" width="45" height="35" fill="#f5efe4" rx="2"/>
+      <polygon points="180,105 225,105 202,82" fill="#1a4a2e"/>
+      <rect x="190" y="115" width="12" height="12" fill="#fdfaf6" rx="1"/>
+      <rect x="208" y="115" width="12" height="12" fill="#fdfaf6" rx="1"/>
+      <rect x="195" y="127" width="15" height="13" fill="#8b5e3c" rx="1"/>
+
+      <!-- Banco tradicional (direita) -->
+      <rect x="370" y="70" width="80" height="70" fill="#ddd" rx="2"/>
+      <rect x="355" y="68" width="110" height="10" fill="#bbb" rx="1"/>
+      <!-- colunas -->
+      <rect x="375" y="78" width="8" height="55" fill="#ccc"/>
+      <rect x="393" y="78" width="8" height="55" fill="#ccc"/>
+      <rect x="411" y="78" width="8" height="55" fill="#ccc"/>
+      <rect x="429" y="78" width="8" height="55" fill="#ccc"/>
+      <text x="410" y="100" font-family="DM Sans,sans-serif" font-size="9" fill="#888" text-anchor="middle">BANCO</text>
+
+      <!-- Mais casas direita -->
+      <rect x="470" y="100" width="45" height="40" fill="#e8dcc8" rx="2"/>
+      <polygon points="470,100 515,100 492,78" fill="#c17f24"/>
+      <rect x="478" y="112" width="12" height="12" fill="#fdfaf6" rx="1"/>
+      <rect x="496" y="112" width="12" height="12" fill="#fdfaf6" rx="1"/>
+      <rect x="481" y="124" width="16" height="16" fill="#8b5e3c" rx="1"/>
+
+      <rect x="530" y="95" width="50" height="45" fill="#f5efe4" rx="2"/>
+      <polygon points="530,95 580,95 555,72" fill="#2d6e47"/>
+      <rect x="540" y="108" width="12" height="12" fill="#fdfaf6" rx="1"/>
+      <rect x="558" y="108" width="12" height="12" fill="#fdfaf6" rx="1"/>
+      <rect x="544" y="120" width="16" height="20" fill="#8b5e3c" rx="1"/>
+
+      <!-- Árvores -->
+      <rect x="340" y="120" width="6" height="20" fill="#8b5e3c"/>
+      <circle cx="343" cy="115" r="12" fill="#4a9e68"/>
+      <rect x="600" y="118" width="5" height="22" fill="#8b5e3c"/>
+      <circle cx="602" cy="113" r="10" fill="#2d6e47"/>
+
+      <!-- Estrada -->
+      <rect x="0" y="140" width="640" height="6" fill="#ccc"/>
+      <rect x="60" y="142" width="30" height="2" fill="white" rx="1" opacity="0.7"/>
+      <rect x="140" y="142" width="30" height="2" fill="white" rx="1" opacity="0.7"/>
+      <rect x="240" y="142" width="30" height="2" fill="white" rx="1" opacity="0.7"/>
+      <rect x="380" y="142" width="30" height="2" fill="white" rx="1" opacity="0.7"/>
+      <rect x="500" y="142" width="30" height="2" fill="white" rx="1" opacity="0.7"/>
+
+      <!-- Label cooperativa -->
+      <text x="290" y="22" font-family="DM Sans,sans-serif" font-size="8" fill="#2d6e47" text-anchor="middle" font-weight="500">COOPERATIVA</text>
+      <!-- Label banco -->
+      <text x="410" y="62" font-family="DM Sans,sans-serif" font-size="8" fill="#888" text-anchor="middle">BANCO TRADICIONAL</text>
+    </svg>
+  </div>
+</section>
+
+<!-- SEÇÃO PROBLEMA -->
+<section class="section" id="problema">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label" data-pt="O problema" data-en="The problem">O problema</div>
+      <div class="divider"></div>
+      <h2 class="section-title" data-pt="Para onde vai o seu <em>dinheiro</em>?" data-en="Where does your <em>money</em> go?">Para onde vai o seu <em>dinheiro</em>?</h2>
+      <p class="section-body" data-pt="Quando você deposita em um banco tradicional, seu dinheiro percorre um longo caminho — saindo da sua cidade rumo às sedes em grandes centros. O retorno para a comunidade local é mínimo." data-en="When you deposit in a traditional bank, your money travels a long way — leaving your city toward headquarters in major centers. The return to the local community is minimal.">
+        Quando você deposita em um banco tradicional, seu dinheiro percorre um longo caminho — saindo da sua cidade rumo às sedes em grandes centros. O retorno para a comunidade local é mínimo.
+      </p>
+    </div>
+
+    <div class="fluxo-container reveal">
+
+      <!-- BANCO TRADICIONAL -->
+      <div class="fluxo-card banco">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+          <span class="pill pill-vermelho" data-pt="Banco tradicional" data-en="Traditional bank">Banco tradicional</span>
+        </div>
+        <div class="fluxo-card-title" data-pt="Dinheiro que vai embora" data-en="Money that leaves">Dinheiro que vai embora</div>
+        <div class="fluxo-card-sub" data-pt="O lucro sai da cidade e beneficia acionistas distantes" data-en="Profit leaves the city and benefits distant shareholders">O lucro sai da cidade e beneficia acionistas distantes</div>
+
+        <div class="fluxo-svg-wrap">
+          <svg viewBox="0 0 320 215" xmlns="http://www.w3.org/2000/svg" width="100%" style="display:block">
+            <defs>
+              <marker id="arr-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#c0392b"/>
+              </marker>
+              <path id="path-banco" d="M 75 130 C 115 112, 168 88, 230 68" fill="none"/>
+            </defs>
+
+            <!-- "São Paulo" label acima do bloco -->
+            <text x="262" y="18" font-family="DM Sans,sans-serif" font-size="9" fill="#999" text-anchor="middle" font-weight="500">São Paulo</text>
+
+            <!-- SP — prédios no canto superior direito -->
+            <rect x="222" y="24" width="80" height="52" fill="#e8e8e8" rx="6" stroke="#ccc" stroke-width="1"/>
+            <rect x="230" y="40" width="9" height="28" fill="#bbb" rx="1"/>
+            <rect x="242" y="33" width="11" height="35" fill="#bbb" rx="1"/>
+            <rect x="256" y="41" width="9" height="27" fill="#bbb" rx="1"/>
+            <rect x="268" y="36" width="11" height="32" fill="#bbb" rx="1"/>
+            <rect x="282" y="42" width="9" height="26" fill="#bbb" rx="1"/>
+            <text x="262" y="88" font-family="DM Sans,sans-serif" font-size="7.5" fill="#aaa" text-anchor="middle" data-pt="sede do banco" data-en="bank headquarters">sede do banco</text>
+
+            <!-- Fundo tipo mapa — estado -->
+            <ellipse cx="120" cy="148" rx="112" ry="62" fill="#f0ede6" stroke="#ddd5c4" stroke-width="1.2"/>
+            <text x="120" y="208" font-family="DM Sans,sans-serif" font-size="8" fill="#bbb" text-anchor="middle" data-pt="seu estado" data-en="your state">seu estado</text>
+
+            <!-- Sua cidade — bolinha dentro do estado -->
+            <circle cx="76" cy="143" r="30" fill="#e8dcc8" stroke="#c17f24" stroke-width="1.5"/>
+            <rect x="59" y="133" width="14" height="12" fill="#f5efe4" rx="1"/>
+            <polygon points="59,133 73,133 66,126" fill="#c17f24"/>
+            <rect x="77" y="137" width="13" height="10" fill="#f5efe4" rx="1"/>
+            <polygon points="77,137 90,137 83,130" fill="#c17f24"/>
+            <rect x="65" y="145" width="12" height="10" fill="#f5efe4" rx="1"/>
+            <polygon points="65,145 77,145 71,138" fill="#8b5e3c"/>
+            <text x="76" y="182" font-family="DM Sans,sans-serif" font-size="8" fill="#8b5e3c" text-anchor="middle" font-weight="500" data-pt="Sua cidade" data-en="Your city">Sua cidade</text>
+
+            <!-- Estrada saindo da cidade -->
+            <path d="M 104 138 C 148 120, 182 98, 224 76" stroke="#ddd" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+            <!-- Seta tracejada do dinheiro saindo -->
+            <path d="M 104 138 C 148 120, 182 98, 226 70" stroke="#c0392b" stroke-width="1.5" fill="none" marker-end="url(#arr-red)" stroke-dasharray="5,3" opacity="0.5"/>
+
+            <!-- Bolinha de dinheiro animada -->
+            <g>
+              <circle r="9" fill="#c0392b">
+                <animateMotion dur="2.8s" repeatCount="indefinite" keyTimes="0;0.75;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1">
+                  <mpath href="#path-banco"/>
+                </animateMotion>
+                <animate attributeName="opacity" values="1;0.9;0" dur="2.8s" repeatCount="indefinite"/>
+              </circle>
+              <text font-family="DM Sans,sans-serif" font-size="9" fill="white" text-anchor="middle" dy="3">$</text>
+            </g>
+
+            <!-- Seta de retorno fraca -->
+            <path d="M 224 76 C 182 100, 140 118, 106 134" stroke="#c0392b" stroke-width="1" fill="none" stroke-dasharray="3,5" opacity="0.22"/>
+            <text x="172" y="116" font-family="DM Sans,sans-serif" font-size="7.5" fill="#c0392b" text-anchor="middle" opacity="0.5" data-pt="pouco retorno" data-en="little return">pouco retorno</text>
+          </svg>
+        </div>
+
+        <ul style="list-style:none;margin-top:1rem;display:flex;flex-direction:column;gap:8px">
+          <li style="display:flex;align-items:flex-start;gap:8px;font-size:0.85rem;color:#5a5a52">
+            <span style="color:#c0392b;margin-top:2px">✕</span>
+            <span data-pt="Lucro distribuído a acionistas externos" data-en="Profit distributed to external shareholders">Lucro distribuído a acionistas externos</span>
+          </li>
+          <li style="display:flex;align-items:flex-start;gap:8px;font-size:0.85rem;color:#5a5a52">
+            <span style="color:#c0392b;margin-top:2px">✕</span>
+            <span data-pt="Decisões tomadas longe da sua realidade" data-en="Decisions made far from your reality">Decisões tomadas longe da sua realidade</span>
+          </li>
+          <li style="display:flex;align-items:flex-start;gap:8px;font-size:0.85rem;color:#5a5a52">
+            <span style="color:#c0392b;margin-top:2px">✕</span>
+            <span data-pt="Tarifas altas, juros maiores para o cliente" data-en="High fees, higher interest rates for the client">Tarifas altas, juros maiores para o cliente</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- COOPERATIVA -->
+      <div class="fluxo-card coop">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+          <span class="pill pill-verde" data-pt="Cooperativa de crédito" data-en="Credit cooperative">Cooperativa de crédito</span>
+        </div>
+        <div class="fluxo-card-title" data-pt="Dinheiro que circula aqui" data-en="Money that circulates here">Dinheiro que circula aqui</div>
+        <div class="fluxo-card-sub" data-pt="O excedente retorna como benefícios para os próprios cooperados" data-en="The surplus returns as benefits to the cooperative members themselves">O excedente retorna como benefícios para os próprios cooperados</div>
+
+        <div class="fluxo-svg-wrap">
+          <svg viewBox="0 0 320 230" xmlns="http://www.w3.org/2000/svg" width="100%" style="display:block">
+            <defs>
+              <path id="path-coop" d="M 160 62 C 222 62, 268 96, 268 135 C 268 174, 222 208, 160 208 C 98 208, 52 174, 52 135 C 52 96, 98 62, 160 62"/>
+            </defs>
+
+            <!-- Label topo -->
+            <text x="160" y="16" font-family="DM Sans,sans-serif" font-size="8.5" fill="#4a9e68" text-anchor="middle" font-weight="500" data-pt="sua cidade — todos os cooperados moram aqui" data-en="your city — all members live here">sua cidade — todos os cooperados moram aqui</text>
+
+            <!-- Fundo cidade — círculo grande -->
+            <circle cx="160" cy="135" r="100" fill="#edf5e8" stroke="#a8d494" stroke-width="1.5" stroke-dasharray="5,3"/>
+
+            <!-- Cooperativa central -->
+            <rect x="136" y="112" width="48" height="40" fill="#2d6e47" rx="6"/>
+            <polygon points="160,89 186,112 134,112" fill="#1a4a2e"/>
+            <rect x="146" y="124" width="9" height="10" fill="#fdfaf6" rx="1"/>
+            <rect x="161" y="124" width="9" height="10" fill="#fdfaf6" rx="1"/>
+            <rect x="149" y="134" width="16" height="18" fill="#1a4a2e" rx="1"/>
+            <rect x="156" y="94" width="5" height="14" fill="#e8a84a"/>
+            <rect x="150" y="99" width="17" height="4" fill="#e8a84a"/>
+            <text x="160" y="166" font-family="DM Sans,sans-serif" font-size="8" fill="#1a4a2e" text-anchor="middle" font-weight="500" data-pt="Cooperativa" data-en="Cooperative">Cooperativa</text>
+
+            <!-- Casa topo-esquerda -->
+            <rect x="62" y="74" width="32" height="24" fill="#f5efe4" rx="2" stroke="#e8dcc8" stroke-width="1"/>
+            <polygon points="62,74 94,74 78,58" fill="#c17f24"/>
+            <rect x="69" y="82" width="8" height="8" fill="white" rx="1"/>
+            <rect x="81" y="82" width="8" height="8" fill="white" rx="1"/>
+            <text x="78" y="112" font-family="DM Sans,sans-serif" font-size="7.5" fill="#8b5e3c" text-anchor="middle" data-pt="cooperado" data-en="member">cooperado</text>
+            <line x1="93" y1="86" x2="137" y2="118" stroke="#4a9e68" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+
+            <!-- Casa topo-direita -->
+            <rect x="226" y="74" width="32" height="24" fill="#f5efe4" rx="2" stroke="#e8dcc8" stroke-width="1"/>
+            <polygon points="226,74 258,74 242,58" fill="#c17f24"/>
+            <rect x="233" y="82" width="8" height="8" fill="white" rx="1"/>
+            <rect x="245" y="82" width="8" height="8" fill="white" rx="1"/>
+            <text x="242" y="112" font-family="DM Sans,sans-serif" font-size="7.5" fill="#8b5e3c" text-anchor="middle" data-pt="cooperado" data-en="member">cooperado</text>
+            <line x1="227" y1="86" x2="183" y2="118" stroke="#4a9e68" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+
+            <!-- Casa baixo-esquerda -->
+            <rect x="62" y="175" width="32" height="24" fill="#f5efe4" rx="2" stroke="#e8dcc8" stroke-width="1"/>
+            <polygon points="62,175 94,175 78,160" fill="#8b5e3c"/>
+            <rect x="69" y="183" width="8" height="8" fill="white" rx="1"/>
+            <rect x="81" y="183" width="8" height="8" fill="white" rx="1"/>
+            <text x="78" y="213" font-family="DM Sans,sans-serif" font-size="7.5" fill="#8b5e3c" text-anchor="middle" data-pt="cooperado" data-en="member">cooperado</text>
+            <line x1="93" y1="182" x2="137" y2="148" stroke="#4a9e68" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+
+            <!-- Casa baixo-direita -->
+            <rect x="226" y="175" width="32" height="24" fill="#f5efe4" rx="2" stroke="#e8dcc8" stroke-width="1"/>
+            <polygon points="226,175 258,175 242,160" fill="#8b5e3c"/>
+            <rect x="233" y="183" width="8" height="8" fill="white" rx="1"/>
+            <rect x="245" y="183" width="8" height="8" fill="white" rx="1"/>
+            <text x="242" y="213" font-family="DM Sans,sans-serif" font-size="7.5" fill="#8b5e3c" text-anchor="middle" data-pt="cooperado" data-en="member">cooperado</text>
+            <line x1="227" y1="182" x2="183" y2="148" stroke="#4a9e68" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+
+            <!-- Dinheiro circulando -->
+            <g>
+              <circle r="9" fill="#2d6e47" opacity="0.92">
+                <animateMotion dur="4s" repeatCount="indefinite">
+                  <mpath href="#path-coop"/>
+                </animateMotion>
+              </circle>
+              <text font-family="DM Sans,sans-serif" font-size="9" fill="white" text-anchor="middle" dy="3">$</text>
+            </g>
+          </svg>
+        </div>
+
+        <ul style="list-style:none;margin-top:1rem;display:flex;flex-direction:column;gap:8px">
+          <li style="display:flex;align-items:flex-start;gap:8px;font-size:0.85rem;color:#5a5a52">
+            <span style="color:#2d6e47;margin-top:2px">✓</span>
+            <span data-pt="Sobras distribuídas proporcionalmente aos cooperados" data-en="Surplus distributed proportionally to members">Sobras distribuídas proporcionalmente aos cooperados</span>
+          </li>
+          <li style="display:flex;align-items:flex-start;gap:8px;font-size:0.85rem;color:#5a5a52">
+            <span style="color:#2d6e47;margin-top:2px">✓</span>
+            <span data-pt="Um cooperado = um voto, independente do saldo" data-en="One member = one vote, regardless of balance">Um cooperado = um voto, independente do saldo</span>
+          </li>
+          <li style="display:flex;align-items:flex-start;gap:8px;font-size:0.85rem;color:#5a5a52">
+            <span style="color:#2d6e47;margin-top:2px">✓</span>
+            <span data-pt="Taxas menores, crédito mais acessível localmente" data-en="Lower fees, more accessible credit locally">Taxas menores, crédito mais acessível localmente</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block reveal" style="margin-top:2.5rem">
+      <p data-pt='"Uma cooperativa de crédito não é apenas uma instituição financeira — é uma ferramenta de desenvolvimento local. Cada depósito fortalece a própria comunidade."' data-en='"A credit cooperative is not just a financial institution — it is a tool for local development. Every deposit strengthens the community itself."'>
+        "Uma cooperativa de crédito não é apenas uma instituição financeira — é uma ferramenta de desenvolvimento local. Cada depósito fortalece a própria comunidade."
+      </p>
+      <cite data-pt="Conceito central do cooperativismo financeiro" data-en="Core concept of financial cooperativism">Conceito central do cooperativismo financeiro</cite>
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO IMPACTO -->
+<section class="section impacto-bg" id="impacto">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label" data-pt="Dados reais do Brasil" data-en="Real data from Brazil">Dados reais do Brasil</div>
+      <div class="divider" style="background:var(--ambar-claro)"></div>
+      <h2 class="section-title" data-pt="O cooperativismo em <em>números</em>" data-en="Cooperativism in <em>numbers</em>">O cooperativismo em <em>números</em></h2>
+      <p class="section-body" data-pt="O sistema cooperativo financeiro brasileiro é um dos maiores do mundo e cobre praticamente todo o território nacional." data-en="The Brazilian financial cooperative system is one of the largest in the world and covers virtually the entire national territory.">
+        O sistema cooperativo financeiro brasileiro é um dos maiores do mundo e cobre praticamente todo o território nacional.
+      </p>
+    </div>
+
+    <div class="stats-grid reveal">
+      <div class="stat-card">
+        <div class="stat-number" id="stat1">0</div>
+        <div class="stat-label" data-pt="cooperativas de crédito no Brasil" data-en="credit cooperatives in Brazil">cooperativas de crédito no Brasil</div>
+        <div class="stat-source">Fonte: OCB 2024</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat2">0</div>
+        <div class="stat-label" data-pt="cooperados em todo o país" data-en="members across the country">cooperados em todo o país</div>
+        <div class="stat-source">Fonte: BACEN 2024</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat3">0</div>
+        <div class="stat-label" data-pt="dos municípios brasileiros atendidos" data-en="of Brazilian municipalities served">dos municípios brasileiros atendidos</div>
+        <div class="stat-source">Fonte: OCB / SICOOB</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat4">0</div>
+        <div class="stat-label" data-pt="em ativos totais do sistema" data-en="in total system assets">em ativos totais do sistema</div>
+        <div class="stat-source">Fonte: BACEN 2024</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO COMO FUNCIONA -->
+<section class="section como-funciona-bg" id="como-funciona">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label" data-pt="Como participar" data-en="How to participate">Como participar</div>
+      <div class="divider"></div>
+      <h2 class="section-title" data-pt="Simples assim: <em>você</em> é dono" data-en="Simple as that: <em>you</em> are the owner">Simples assim: <em>você</em> é dono</h2>
+      <p class="section-body" data-pt="Qualquer pessoa pode se tornar cooperado. O processo é simples e os benefícios são imediatos." data-en="Anyone can become a cooperative member. The process is simple and the benefits are immediate.">
+        Qualquer pessoa pode se tornar cooperado. O processo é simples e os benefícios são imediatos.
+      </p>
+    </div>
+
+    <div class="steps-grid reveal">
+      <div class="step-card">
+        <div class="step-number">01</div>
+        <div class="step-icon-wrap" style="background:rgba(26,74,46,0.1)">🏠</div>
+        <div class="step-title" data-pt="Encontre uma cooperativa" data-en="Find a cooperative">Encontre uma cooperativa</div>
+        <div class="step-body" data-pt="Busque a cooperativa mais próxima de você — SICOOB, SICREDI, CRESOL e outras estão presentes em todo o Brasil." data-en="Find the cooperative closest to you — SICOOB, SICREDI, CRESOL and others are present throughout Brazil.">Busque a cooperativa mais próxima de você — SICOOB, SICREDI, CRESOL e outras estão presentes em todo o Brasil.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">02</div>
+        <div class="step-icon-wrap" style="background:rgba(193,127,36,0.1)">📋</div>
+        <div class="step-title" data-pt="Associe-se" data-en="Join">Associe-se</div>
+        <div class="step-body" data-pt="Pague a cota de participação (geralmente baixa) e apresente seus documentos. Pronto, você é cooperado!" data-en="Pay the membership fee (usually low) and present your documents. Done, you're a member!">Pague a cota de participação (geralmente baixa) e apresente seus documentos. Pronto, você é cooperado!</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">03</div>
+        <div class="step-icon-wrap" style="background:rgba(74,158,104,0.1)">🗳️</div>
+        <div class="step-title" data-pt="Participe das decisões" data-en="Participate in decisions">Participe das decisões</div>
+        <div class="step-body" data-pt="Nas assembleias, você vota e tem voz igual à de qualquer outro cooperado — independente do quanto tem investido." data-en="At assemblies, you vote and have equal voice to any other member — regardless of how much you've invested.">Nas assembleias, você vota e tem voz igual à de qualquer outro cooperado — independente do quanto tem investido.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">04</div>
+        <div class="step-icon-wrap" style="background:rgba(232,168,74,0.12)">💰</div>
+        <div class="step-title" data-pt="Receba as sobras" data-en="Receive the surplus">Receba as sobras</div>
+        <div class="step-body" data-pt="Ao final do ano, o lucro gerado é distribuído proporcionalmente entre os cooperados — você recebe de volta parte do que pagou em tarifas." data-en="At year end, the generated profit is distributed proportionally among members — you get back part of what you paid in fees.">Ao final do ano, o lucro gerado é distribuído proporcionalmente entre os cooperados — você recebe de volta parte do que pagou em tarifas.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <h2 data-pt="Seu dinheiro pode fazer mais pela sua cidade" data-en="Your money can do more for your city">Seu dinheiro pode fazer mais pela sua cidade</h2>
+  <p data-pt="Conheça o sistema cooperativo financeiro brasileiro e descubra como a sua participação transforma a economia local." data-en="Get to know the Brazilian financial cooperative system and discover how your participation transforms the local economy.">
+    Conheça o sistema cooperativo financeiro brasileiro e descubra como a sua participação transforma a economia local.
+  </p>
+  <a href="https://www.ocb.org.br" target="_blank" rel="noopener" class="btn-white" data-pt="Conhecer cooperativas — OCB.org.br ↗" data-en="Learn about cooperatives — OCB.org.br ↗">
+    Conhecer cooperativas — OCB.org.br ↗
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p data-pt="Projeto educacional de portfólio desenvolvido por <a href='https://linkedin.com/in/marcelo-josé-gomes-parreira-101b352ab' target='_blank'>Marcelo Parreira</a>" data-en="Educational portfolio project developed by <a href='https://linkedin.com/in/marcelo-josé-gomes-parreira-101b352ab' target='_blank'>Marcelo Parreira</a>">
+    Projeto educacional de portfólio desenvolvido por <a href="https://linkedin.com/in/marcelo-josé-gomes-parreira-101b352ab" target="_blank">Marcelo Parreira</a>
+  </p>
+  <p style="margin-top:6px" data-pt="Dados: OCB, BACEN, SICOOB, SICREDI — 2024 &nbsp;|&nbsp; Stack: HTML · CSS · JS · Vercel" data-en="Data: OCB, BACEN, SICOOB, SICREDI — 2024 &nbsp;|&nbsp; Stack: HTML · CSS · JS · Vercel">
+    Dados: OCB, BACEN, SICOOB, SICREDI — 2024 &nbsp;|&nbsp; Stack: HTML · CSS · JS · Vercel
+  </p>
+</footer>
+
+<script>
+  /* ---- LANG TOGGLE ---- */
+  let currentLang = 'pt';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+    document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+
+    document.querySelectorAll('[data-pt]').forEach(el => {
+      const txt = el.getAttribute(`data-${lang}`);
+      if (!txt) return;
+      if (el.tagName === 'A' || el.tagName === 'BUTTON' || el.tagName === 'SPAN' || el.tagName === 'DIV' || el.tagName === 'P' || el.tagName === 'CITE') {
+        el.innerHTML = txt;
+      } else if (el.tagName === 'H1' || el.tagName === 'H2') {
+        el.innerHTML = txt;
+      } else {
+        el.textContent = txt;
+      }
+    });
+
+    document.querySelectorAll('[data-pt]').forEach(el => {
+      if (el.tagName === 'text') {
+        const txt = el.getAttribute(`data-${lang}`);
+        if (txt) el.textContent = txt;
+      }
+    });
+  }
+
+  /* ---- SCROLL REVEAL ---- */
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => revealObs.observe(el));
+
+  /* ---- COUNTERS ---- */
+  const statsData = {
+    stat1: { target: 1059,  suffix: '+',   prefix: '' },
+    stat2: { target: 16,    suffix: 'mi+', prefix: '' },
+    stat3: { target: 98,    suffix: '%',   prefix: '' },
+    stat4: { target: 680,   suffix: 'bi',  prefix: 'R$' },
+  };
+
+  let statsStarted = false;
+  const statsSection = document.getElementById('impacto');
+
+  function animateCounter(id, target, suffix, prefix, duration) {
+    const el = document.getElementById(id);
+    const start = performance.now();
+    function update(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = prefix + Math.floor(ease * target) + suffix;
+      if (p < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  const statsObs = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && !statsStarted) {
+      statsStarted = true;
+      Object.entries(statsData).forEach(([id, d], i) => {
+        setTimeout(() => animateCounter(id, d.target, d.suffix, d.prefix, 1800), i * 200);
+      });
+    }
+  }, { threshold: 0.3 });
+  statsObs.observe(statsSection);
+
+  /* ---- SMOOTH SCROLL ---- */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
